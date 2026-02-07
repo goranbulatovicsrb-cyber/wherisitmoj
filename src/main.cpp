@@ -53,6 +53,7 @@ struct VolumeInfo {
     std::wstring fsName; // NTFS, exFAT...
     bool ok = false;
 };
+static_assert(true, "MAIN_CPP_UPDATED_HAS_LABEL");
 
 static VolumeInfo getVolumeInfo(const std::wstring& root) {
     VolumeInfo v;
