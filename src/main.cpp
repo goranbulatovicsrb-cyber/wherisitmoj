@@ -21,12 +21,12 @@ static std::string wideToUtf8(const std::wstring& ws) {
 }
 
 static std::wstring toLowerW(std::wstring s) {
-    std::transform(s.begin(), s.end(), s.begin(), [](wchar_t c){ return (wchar_t)towlower(c); });
+    std::transform(s.begin(), s.end(), s.begin(), [](wchar_t c) { return (wchar_t)towlower(c); });
     return s;
 }
 
 static std::string toLower(std::string s) {
-    std::transform(s.begin(), s.end(), s.begin(), [](unsigned char c){ return (char)std::tolower(c); });
+    std::transform(s.begin(), s.end(), s.begin(), [](unsigned char c) { return (char)std::tolower(c); });
     return s;
 }
 
@@ -47,13 +47,12 @@ static std::vector<std::wstring> listDriveRoots() {
 }
 
 struct VolumeInfo {
-    std::wstring root;   // e.g., E:\\
-    std::wstring label;  // volume label
+    std::wstring root;   // drive root, example: E:
+    std::wstring label;  // volume label (disk name)
     DWORD serial = 0;    // volume serial number
-    std::wstring fsName; // NTFS, exFAT...
+    std::wstring fsName; // filesystem name
     bool ok = false;
 };
-static_assert(true, "MAIN_CPP_UPDATED_HAS_LABEL");
 
 static VolumeInfo getVolumeInfo(const std::wstring& root) {
     VolumeInfo v;
@@ -246,7 +245,8 @@ static void cmdSearch(const fs::path& indexFile, const std::string& patternUtf8,
 
         std::string hay = rel;
         if (onlyFilename) {
-            size_t p1 = hay.find_last_of("/\\");
+            // safe: both slash types
+            size_t p1 = hay.find_last_of(std::string("\\/"));
             if (p1 != std::string::npos) hay = hay.substr(p1 + 1);
         }
 
