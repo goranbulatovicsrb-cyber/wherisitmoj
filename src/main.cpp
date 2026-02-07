@@ -47,7 +47,7 @@ static std::vector<std::wstring> listDriveRoots() {
 }
 
 struct VolumeInfo {
-    std::wstring root;   // e.g., E:\
+    std::wstring root;   // e.g., E:\\
     std::wstring label;  // volume label
     DWORD serial = 0;    // volume serial number
     std::wstring fsName; // NTFS, exFAT...
